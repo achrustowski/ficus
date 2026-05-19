@@ -28,4 +28,11 @@ typedef enum Collision_Side
     BOTTOM_LEFT_TOP
 } Collision_Side;
 
+typedef enum Dev_Input
+{
+    INACTIVE,
+    TILE_MAP_W,
+    TILE_MAP_H
+} Dev_Input;
+
 #endif

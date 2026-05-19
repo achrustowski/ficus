@@ -1,8 +1,9 @@
 #include "stage.h"
 #include "player.h"
 #include <string.h>
-#include "tilemap.h"
-#include "tileset.h"
+#include "tile_map.h"
+#include "tile_set.h"
+#include "dev_mode.h"
 
 void stage_init(Stage* stage)
 {

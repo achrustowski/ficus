@@ -11,6 +11,7 @@ typedef struct Tile_Map Tile_Map;
 typedef struct Tile_Set Tile_Set;
 typedef struct Stage Stage;
 typedef struct Debug Debug;
+typedef struct Dialog Dialog;
 
 struct Timer
 {
@@ -29,6 +30,15 @@ struct Entity
     int movement_direction_x;
     int movement_direction_y;
     Entity* next;
+};
+
+struct Dialog
+{
+    Rectangle rect;
+    char text[64];
+    char box_title[24];
+    char button_title[12];
+    bool is_active;
 };
 
 struct Tile
@@ -66,12 +76,19 @@ struct Debug
     char frame_rate[32];
 };
 
+typedef struct Dialog_Manager
+{
+    int size;
+    Dialog* dialogs;
+} Dialog_Manager;
+
 typedef struct App
 {
     int S_W;
     int S_H;
     float delta_time;
     Debug debug_menu;
+    bool dev_mode_enabled;
 } App;
 
 struct Stage

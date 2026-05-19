@@ -5,7 +5,6 @@
 #include "raylib.h"
 
 extern App app;
-static Vector2 player_prev_position;
 
 static void player_handle_input(Entity* player);
 static void player_do_movement_x(Entity* player);
@@ -26,10 +25,10 @@ void player_init(Entity* player)
 
 void player_logic(Entity* player, Tile_Map* tile_map)
 {
-    player_handle_input(player);
-    player_do_movement_x(player);
+    if (!app.dev_mode_enabled) player_handle_input(player);
+    if (!app.dev_mode_enabled) player_do_movement_x(player);
     player_do_collisions_x(player, tile_map);
-    player_do_movement_y(player);
+    if (!app.dev_mode_enabled) player_do_movement_y(player);
     player_do_collisions_y(player, tile_map);
 }
 
