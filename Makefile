@@ -1,12 +1,27 @@
-CC = cc
-CFLAGS = clang -gdwarf-4 -Wall
-IFLAGS = -I/opt/homebrew/Cellar/raylib/5.5/include
-LFLAGS = -gdwarf-4 -L/opt/homebrew/Cellar/raylib/5.5/lib
+CC = clang
+
+RAYLIB_PATH = /usr/local
+
+CFLAGS = -Wall -Wextra -gdwarf-4 \
+	-isystem$(RAYLIB_PATH)/include
+
+LDFLAGS = \
+	-L$(RAYLIB_PATH)/lib -lraylib \
+	-framework Cocoa \
+	-framework IOKit \
+	-framework CoreVideo \
+	-framework OpenGL \
+	-framework CoreFoundation \
+	-framework CoreGraphics
+
+SRC = ./src/*.c
+OUT = ./build/main
 
 build:
-	${CC} ${CLFAGS} ./src/*.c ${IFLAGS} ${LFLAGS} -lraylib -o ./build/main
+	mkdir -p build
+	$(CC) $(CFLAGS) $(SRC) $(LDFLAGS) -o $(OUT)
 
-run:
+run: build
 	./build/main
 
 clean:
