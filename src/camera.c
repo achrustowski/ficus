@@ -2,18 +2,10 @@
 #include "stage.h"
 #include <raylib.h>
 #include "structs.h"
-#include <raylib.h>
-#include <string.h>
-#include "camera.h"
-#include <math.h>
-#include <stdio.h>
-#include "misc.h"
-#include "stage.h"
 
 extern App app;
 
 void camera_init(Camera2D* camera) {
-    camera->position = (Vector2){0.0f, 0.0f};
     camera->target = (Vector2){0.0f, 0.0f};
     camera->offset = (Vector2){0.0f, 0.0f};
     camera->rotation = 0.0f;
