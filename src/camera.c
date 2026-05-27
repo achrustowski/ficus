@@ -1,38 +1,33 @@
-#include <raylib.h>
-#include <string.h>
 #include "camera.h"
-#include <math.h>
-#include <stdio.h>
-#include "misc.h"
+#include "stage.h"
 
-extern App app;
-
-void camera_init(Camera2D* camera)
-{
-    camera->target = (Vector2) {0.0f, 0.0f};
-    camera->offset = (Vector2)
-        {
-            GetScreenWidth() / 2.0f, GetScreenHeight() / 2.0f
-        };
+void camera_init(Camera2D* camera) {
+    camera->position = (Vector2){0.0f, 0.0f};
+    camera->target = (Vector2){0.0f, 0.0f};
+    camera->offset = (Vector2){0.0f, 0.0f};
     camera->rotation = 0.0f;
-    camera->zoom = 2.0f;
+    camera->zoom = 1.0f;
 }
 
-void camera_update(Stage* stage, Camera2D* camera)
-{
-    camera->target = (Vector2){
-        (int)stage->player.rect.x,
-        (int)stage->player.rect.y
-    };
-    camera->zoom = expf(logf(camera->zoom) + (float)(GetMouseWheelMove() * 0.1f));
-    if (IsKeyPressed(KEY_R))
-    {
-        camera->zoom = 2.0f;
-    }
+void camera_update(Stage* stage, Camera2D* camera) {
+    // Update the target to follow the player
+    camera->target.x = stage->player.position.x;
+    camera->target.y = stage->player.position.y;
 
-    clamp(&camera->target, &stage->tile_map);
+    // Calculate the offset based on the screen dimensions and camera zoom
+    camera->offset.x = GetScreenWidth() / 2.0f - camera->target.x * camera->zoom;
+    camera->offset.y = GetScreenHeight() / 2.0f - camera->target.y * camera->zoom;
 
-    snprintf(app.debug_menu.player_text, sizeof(app.debug_menu.player_text), "PLAYER: %.2f, %.2f", stage->player.rect.x, stage->player.rect.y);
-    snprintf(app.debug_menu.camera_text, sizeof(app.debug_menu.camera_text), "CAMERA: %.2f, %.2f", camera->target.x, camera->target.y);
-    snprintf(app.debug_menu.camera_zoom, sizeof(app.debug_menu.camera_zoom), "ZOOM: %.2f", camera->zoom);
+    // Ensure the offset does not go out of bounds
+    if (camera->offset.x < 0) camera->offset.x = 0;
+    if (camera->offset.x > stage->tile_map.width * tile_width * camera->zoom - GetScreenWidth()) camera->offset.x = stage->tile_map.width * tile_width * camera->zoom - GetScreenWidth();
+    if (camera->offset.y < 0) camera->offset.y = 0;
+    if (camera->offset.y > stage->tile_map.height * tile_height * camera->zoom - GetScreenHeight()) camera->offset.y = stage->tile_map.height * tile_height * camera->zoom - GetScreenHeight();
+
+    // Update the camera position
+    camera->position.x = camera->target.x + camera->offset.x;
+    camera->position.y = camera->target.y + camera->offset.y;
+
+    // Apply the camera transformation
+    BeginMode2D(camera);
 }
