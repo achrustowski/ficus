@@ -20,3 +20,14 @@ void clamp(Vector2* pos, Tile_Map* tile_map)
         pos->y = tile_map->width * TILE_SIZE - GetScreenHeight() / 2.0f;
     }
 }
+
+bool color_is_equal(Color c1, Color c2)
+{
+    if (c1.a == c2.a && c1.b == c2.b && c1.g == c2.g && c1.r == c2.r)
+    {
+        return true;
+    } else
+    {
+        return false;
+    }
+}

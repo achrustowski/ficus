@@ -15,7 +15,7 @@ void camera_init(Camera2D* camera)
             GetScreenWidth() / 2.0f, GetScreenHeight() / 2.0f
         };
     camera->rotation = 0.0f;
-    camera->zoom = 1.0f;
+    camera->zoom = 2.0f;
 }
 
 void camera_update(Stage* stage, Camera2D* camera)
@@ -27,7 +27,7 @@ void camera_update(Stage* stage, Camera2D* camera)
     camera->zoom = expf(logf(camera->zoom) + (float)(GetMouseWheelMove() * 0.1f));
     if (IsKeyPressed(KEY_R))
     {
-        camera->zoom = 1.0f;
+        camera->zoom = 2.0f;
     }
 
     clamp(&camera->target, &stage->tile_map);

@@ -6,9 +6,10 @@
 
 void tile_set_init(Tile_Set* tile_set)
 {
-    tile_set->size = 13;
+    tile_set->size = 14;
     tile_set->tiles = malloc(sizeof(Tile) * tile_set->size);
     tile_set->colors = malloc(sizeof(Color) * tile_set->size);
+    tile_set->tiles[0] = tile_create(TILE_SIZE, TILE_SIZE, 0, BROWN);
 }
 
 void tile_set_assign(Tile_Set *tile_set)
@@ -26,9 +27,10 @@ void tile_set_assign(Tile_Set *tile_set)
     tile_set->colors[10] = BLUE;
     tile_set->colors[11] = PURPLE;
     tile_set->colors[12] = MAGENTA;
+    tile_set->colors[13] = BROWN;
 
         for (int i = 0; i < tile_set->size; ++i)
         {
-            tile_set->tiles[i] = tile_create(TILE_SIZE, TILE_SIZE, i, tile_set->colors[i]);
+            tile_set->tiles[i] = tile_set->tiles[0];
         }
 }

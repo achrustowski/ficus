@@ -8,12 +8,10 @@
 
 #define GRAVITY 900.0f
 
-#define PLAYER_SPEED_X 200.0f
-#define PLAYER_SPEED_Y 200.0f
+#define PLAYER_SPEED_X 100.0f
+#define PLAYER_SPEED_Y 100.0f
 #define PLAYER_WIDTH 50
 #define PLAYER_HEIGHT 50
-#define PLAYER_VELOCITY_X 220.0f
-#define PLAYER_VELOCITY_Y 220.0f
 
 #define TILE_SIZE 32
 

@@ -9,6 +9,7 @@ Tile tile_create(int width, int height, Collision_Side collision_side, Color col
     tile.rect.y = 0.0f;
     tile.rect.width = width;
     tile.rect.height = height;
+    tile.collision_side = collision_side;
     tile.collision_box = (Rectangle){tile.rect.x, tile.rect.y, width, height};
     tile.color = color;
 

@@ -28,6 +28,9 @@ void dev_mode_init(void)
 
     dialog_create(&dm.dialogs[0], (Rectangle){GetScreenWidth() - 375, 70, 160, 80}, "Tile Map WIDTH", "OK", false);
     dialog_create(&dm.dialogs[1], (Rectangle){GetScreenWidth() - 185, 70, 160, 80}, "Tile Map HEIGHT", "OK", false);
+
+    sprintf(dm.dialogs[0].text, "%d", game.stage.tile_map.width);
+    sprintf(dm.dialogs[1].text, "%d", game.stage.tile_map.height);
 }
 
 void dev_mode_logic(void)

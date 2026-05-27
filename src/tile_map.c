@@ -65,6 +65,7 @@ void tile_map_draw(Game* game, Tile_Map* tile_map, Tile_Set* tile_set)
             tile_set->tiles[tile_id].rect.x = x * TILE_SIZE;
             tile_set->tiles[tile_id].rect.y = y * TILE_SIZE;
             DrawRectangleRec(tile_set->tiles[tile_id].rect, tile_set->tiles[tile_id].color);
+            DrawRectangleLinesEx(tile_set->tiles[tile_id].rect, 0.5, BLACK);
         }
     }
 

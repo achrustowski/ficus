@@ -15,8 +15,8 @@ static void player_do_collisions_y(Entity* player, Tile_Map* tile_map);
 void player_init(Entity* player)
 {
     player->rect = (Rectangle){GetScreenWidth() / 2.0f, GetScreenHeight() / 2.0f, PLAYER_WIDTH, PLAYER_HEIGHT};
-    player->velocity = (Vector2){PLAYER_VELOCITY_X, PLAYER_VELOCITY_Y};
-    player->color = WHITE;
+    player->velocity = (Vector2){0.0f, 0.0f};
+    player->color = ORANGE;
     player->speed = (Vector2){PLAYER_SPEED_X, PLAYER_SPEED_Y};
     player->collision_side = P_NONE;
     player->movement_direction_x = 0;

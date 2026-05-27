@@ -22,9 +22,9 @@ int main()
 
     SetTargetFPS(FPS);
 
+    game_init(&game);
     dev_mode_init();
     debug_menu_init(&app.debug_menu);
-    game_init(&game);
 
     while(!WindowShouldClose())
     {
