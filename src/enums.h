@@ -35,4 +35,10 @@ typedef enum Dev_Input
     TILE_MAP_H
 } Dev_Input;
 
+typedef enum Layer_Type
+{
+    LAYER_GROUND,
+    LAYER_DECORATIONS
+} Layer_Type;
+
 #endif
