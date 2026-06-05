@@ -33,5 +33,6 @@ void debug_menu_draw(Debug* debug)
         DrawText(debug->screen_start, debug->rect.x + 10.0f, debug->rect.y + 130.0f, 20, GREEN);
         DrawText(debug->screen_end, debug->rect.x + 10.0f, debug->rect.y + 170.0f, 20, GREEN);
         DrawText(debug->frame_rate, debug->rect.x + 10.0f, debug->rect.y + 210.0f, 20, GREEN);
+        DrawText(debug->tiles_drawn, debug->rect.x + 10.0f, debug->rect.y + 250.0f, 20, GREEN);
     }
 }
