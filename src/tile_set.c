@@ -1,36 +1,45 @@
 #include "tile_set.h"
-#include "defs.h"
+#include "enums.h"
 #include "raylib.h"
 #include "stdlib.h"
-#include "tiles.h"
+#include "defs.h"
+#include <stdio.h>
 
-void tile_set_init(Tile_Set* tile_set)
+static void tile_set_init(Tile_Set* t_s, char* filename);
+static void tile_set_init_layers(Stage* stage);
+
+static void tile_set_init(Tile_Set* t_s, char* filename)
 {
-    tile_set->size = 14;
-    tile_set->tiles = malloc(sizeof(Tile) * tile_set->size);
-    tile_set->colors = malloc(sizeof(Color) * tile_set->size);
-    tile_set->tiles[0] = tile_create(TILE_SIZE, TILE_SIZE, 0, BROWN);
+    t_s->texture = LoadTexture(filename);
+    int columns = t_s->texture.width / TILE_SIZE;
+    int rows = t_s->texture.height / TILE_SIZE;
+
+    t_s->size = columns * rows;
+    t_s->tiles = malloc(sizeof(Tile) * t_s->size);
+
+    for (int i = 0; i < t_s->size; ++i)
+    {
+        int col = i % columns;
+        int row = i / columns;
+        t_s->tiles[i].rect = (Rectangle)
+            {
+                col * TILE_SIZE,
+                row * TILE_SIZE,
+                TILE_SIZE,
+                TILE_SIZE
+            };
+    }
 }
 
-void tile_set_assign(Tile_Set *tile_set)
+static void tile_set_init_layers(Stage* stage)
 {
-    tile_set->colors[0] = PINK;
-    tile_set->colors[1] = GRAY;
-    tile_set->colors[2] = GREEN;
-    tile_set->colors[3] = YELLOW;
-    tile_set->colors[4] = GOLD;
-    tile_set->colors[5] = ORANGE;
-    tile_set->colors[6] = PINK;
-    tile_set->colors[7] = RED;
-    tile_set->colors[8] = MAROON;
-    tile_set->colors[9] = LIME;
-    tile_set->colors[10] = BLUE;
-    tile_set->colors[11] = PURPLE;
-    tile_set->colors[12] = MAGENTA;
-    tile_set->colors[13] = BROWN;
+    stage->tile_map.layers[LAYER_GROUND].tile_set = &stage->tile_set_ground;
+    stage->tile_map.layers[LAYER_DECORATIONS].tile_set = &stage->tile_set_terrain_objects;
+}
 
-        for (int i = 0; i < tile_set->size; ++i)
-        {
-            tile_set->tiles[i] = tile_set->tiles[0];
-        }
+void tile_set_load(Stage* stage)
+{
+    tile_set_init(&stage->tile_set_ground, "./assets/ground_tiles/Grass.png");
+    tile_set_init(&stage->tile_set_terrain_objects, "./assets/ground_tiles/TerrainObjects.png");
+    tile_set_init_layers(stage);
 }

@@ -3,7 +3,7 @@
 
 #include "structs.h"
 
-void tile_set_init(Tile_Set* tile_set);
-void tile_set_assign(Tile_Set* tile_set);
+void tile_set_load(Stage* stage);
+void tile_set_draw(Tile_Set* tile_set_ground, Tile_Set* tile_set_terrain_objects);
 
 #endif
