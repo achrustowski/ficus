@@ -15,7 +15,7 @@ void clamp(Vector2* pos, Tile_Map* tile_map)
     if (pos->y < GetScreenHeight() / 2.0f)
     {
         pos->y = GetScreenHeight() / 2.0f;
-    } else if (pos->y > tile_map->width * TILE_SIZE - GetScreenHeight() / 2.0f)
+    } else if (pos->y > tile_map->height * TILE_SIZE - GetScreenHeight() / 2.0f)
     {
         pos->y = tile_map->width * TILE_SIZE - GetScreenHeight() / 2.0f;
     }

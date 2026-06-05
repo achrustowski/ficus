@@ -4,6 +4,8 @@
 #include "stage.h"
 #include "dev_mode.h"
 
+extern App app;
+
 void game_init(Game* game)
 {
     camera_init(&game->camera);
@@ -22,5 +24,5 @@ void game_draw(Game* game)
     BeginMode2D(game->camera);
     stage_draw(game);
     EndMode2D();
-    dev_mode_draw();
+    dev_mode_draw(game);
 }
