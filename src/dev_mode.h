@@ -5,6 +5,6 @@
 
 void dev_mode_init(void);
 void dev_mode_logic(void);
-void dev_mode_draw(void);
+void dev_mode_draw(Game* game);
 
 #endif
