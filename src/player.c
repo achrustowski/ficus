@@ -14,21 +14,22 @@ static void player_do_collisions_y(Entity* player, Tile_Map* tile_map);
 
 void player_init(Entity* player)
 {
-    player->rect = (Rectangle){GetScreenWidth() / 2.0f, GetScreenHeight() / 2.0f, PLAYER_WIDTH, PLAYER_HEIGHT};
+    player->rect = (Rectangle){GetScreenWidth() / 2.0f - PLAYER_WIDTH / 2.0f, GetScreenHeight() / 2.0f - PLAYER_HEIGHT / 2.0f, PLAYER_WIDTH, PLAYER_HEIGHT};
     player->velocity = (Vector2){0.0f, 0.0f};
     player->color = ORANGE;
     player->speed = (Vector2){PLAYER_SPEED_X, PLAYER_SPEED_Y};
     player->collision_side = P_NONE;
     player->movement_direction_x = 0;
     player->movement_direction_y = 0;
+    player->texture = LoadTexture("./assets/player/forrest-character.png");
 }
 
 void player_logic(Entity* player, Tile_Map* tile_map)
 {
-    if (!app.dev_mode_enabled) player_handle_input(player);
-    if (!app.dev_mode_enabled) player_do_movement_x(player);
+    player_handle_input(player);
+    player_do_movement_x(player);
     player_do_collisions_x(player, tile_map);
-    if (!app.dev_mode_enabled) player_do_movement_y(player);
+    player_do_movement_y(player);
     player_do_collisions_y(player, tile_map);
 }
 
@@ -70,9 +71,9 @@ static void player_do_movement_y(Entity* player)
 
 static void player_do_collisions_x(Entity* player, Tile_Map* tile_map)
 {
-    if (player->rect.x < PLAYER_WIDTH / 2.0f)
+    if (player->rect.x < 0)
     {
-        player->rect.x = PLAYER_WIDTH / 2.0f;
+        player->rect.x = 0;
     } else if (player->rect.x > tile_map->width * TILE_SIZE - PLAYER_WIDTH / 2.0f)
     {
         player->rect.x = tile_map->width * TILE_SIZE - PLAYER_WIDTH / 2.0f;
@@ -80,9 +81,9 @@ static void player_do_collisions_x(Entity* player, Tile_Map* tile_map)
 }
 static void player_do_collisions_y(Entity* player, Tile_Map* tile_map)
 {
-    if (player->rect.y < PLAYER_HEIGHT / 2.0f)
+    if (player->rect.y < 0)
     {
-        player->rect.y = PLAYER_HEIGHT / 2.0f;
+        player->rect.y = 0;
     } else if (player->rect.y > tile_map->height * TILE_SIZE - PLAYER_HEIGHT / 2.0f)
     {
         player->rect.y = tile_map->height * TILE_SIZE - PLAYER_HEIGHT / 2.0f;
@@ -91,6 +92,5 @@ static void player_do_collisions_y(Entity* player, Tile_Map* tile_map)
 
 void player_draw(Entity* player)
 {
-    DrawRectangle(player->rect.x - PLAYER_WIDTH / 2.0f, player->rect.y - PLAYER_HEIGHT / 2.0f,
-                  player->rect.width, player->rect.height, player->color);
+    DrawTexture(player->texture, player->rect.x, player->rect.y, WHITE);
 }
