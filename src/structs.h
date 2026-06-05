@@ -6,12 +6,14 @@
 
 typedef struct Timer Timer;
 typedef struct Entity Entity;
+typedef struct Layer Layer;
 typedef struct Tile Tile;
 typedef struct Tile_Map Tile_Map;
 typedef struct Tile_Set Tile_Set;
 typedef struct Stage Stage;
 typedef struct Debug Debug;
 typedef struct Dialog Dialog;
+typedef struct Dev Dev;
 
 struct Timer
 {
@@ -22,6 +24,7 @@ struct Timer
 
 struct Entity
 {
+    Texture2D texture;
     Rectangle rect;
     Vector2 velocity;
     Vector2 speed;
@@ -41,26 +44,40 @@ struct Dialog
     bool is_active;
 };
 
+typedef struct Dialog_Manager
+{
+    int size;
+    Dialog* dialogs;
+} Dialog_Manager;
+
+struct Layer
+{
+    int* tiles;
+    int width;
+    int height;
+    Tile_Set* tile_set;
+};
+
 struct Tile
 {
     Rectangle rect;
     Rectangle collision_box;
     Collision_Side collision_side;
-    Color color;
 };
 
 struct Tile_Map
 {
+    int layer_count;
     int width;
     int height;
-    int* tiles;
+    Layer* layers;
 };
 
 struct Tile_Set
 {
     int size;
     Tile* tiles;
-    Color* colors;
+    Texture2D texture;
 };
 
 struct Debug
@@ -74,13 +91,18 @@ struct Debug
     char screen_start[64];
     char screen_end[64];
     char frame_rate[32];
+    char tiles_drawn[32];
 };
 
-typedef struct Dialog_Manager
+struct Dev
 {
-    int size;
-    Dialog* dialogs;
-} Dialog_Manager;
+    bool enabled;
+    int selected_tile_id;
+    int selected_tile_layer;
+    Tile_Set* selected_tile_set;
+    Rectangle tile_rect;
+    bool mouse_over;
+};
 
 typedef struct App
 {
@@ -88,13 +110,14 @@ typedef struct App
     int S_H;
     float delta_time;
     Debug debug_menu;
-    bool dev_mode_enabled;
+    Dev dev_mode;
 } App;
 
 struct Stage
 {
     Tile_Map tile_map;
-    Tile_Set tile_set;
+    Tile_Set tile_set_ground;
+    Tile_Set tile_set_terrain_objects;
     Entity player;
 };
 
